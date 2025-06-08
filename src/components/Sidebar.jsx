@@ -1,20 +1,21 @@
 import React from "react";
+import { Link } from "react-router-dom"; // добавяме Link
 import "../styles/Home.css";
 
 const Sidebar = () => {
   return (
     <div className="sidebar">
       <ul>
-        <li><a href="/home" className="title">HOME</a></li>
-        <li><a href="/woman" className="title">WOMAN</a></li>
-        <li><a href="/man" className="title">MAN</a></li>
-        <li><a href="#" className="title">ABOUT US</a></li>
-        <li><a href="/profile" className="title">PROFILE</a></li>
-        <li><a href="/registration" className="title">REGISTRATION</a></li>
-        <li><a href="/login" className="title">LOG IN</a></li>
+        <li><Link to="/" className="title">HOME</Link></li>
+        <li><Link to="/woman" className="title">WOMAN</Link></li>
+        <li><Link to="/man" className="title">MAN</Link></li>
+        <li><Link to="/profile" className="title">PROFILE</Link></li>
+        <li><Link to="/registration" className="title">REGISTRATION</Link></li>
+        <li><Link to="/login" className="title">LOG IN</Link></li>
       </ul>
     </div>
   );
 };
 
 export default Sidebar;
+

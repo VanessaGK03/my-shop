@@ -90,7 +90,7 @@
   align-items: center;
 }
 
-.wrapper .sidebar ul li a {
+.wrapper .sidebar ul li .title {
   display: block;
   padding: 20px;
   color: black;
@@ -101,7 +101,7 @@
   /* display: inline-block;*/
 }
 
-.wrapper .sidebar ul li a:before {
+.wrapper .sidebar ul li .title:before {
   content: "";
   position: absolute;
   top: 0;
@@ -112,7 +112,7 @@
   display: none;
 }
 
-.wrapper .sidebar ul li a:hover {
+.wrapper .sidebar ul li .title:hover {
   color: rgb(68, 68, 68);
 }
 
@@ -284,3 +284,4 @@
     font-size: 10px;
   }
 }
+

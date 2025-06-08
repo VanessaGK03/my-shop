@@ -1,0 +1,33 @@
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.clothing-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.clothing-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.clothes-describe {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.clothes-name {
+  font-weight: bold;
+}
+
+.clothes-price {
+  color: #e60023;
+  font-size: 1.2em;
+}
