@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.hero-section {
+  background-image: url("/style/images/header.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+  z-index: 1;
+}
+
+.main-container {
+  width: calc(100% - 200px);
+  margin-top: 70px;
+  margin-left: 200px;
+  padding: 15px;
+  transition: all 0.5s ease;
+}
+
+.main-container .item {
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+.blue-button,
+.delete-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.blue-button {
+  background-color: #3498db;
+  color: white;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.blue-button:hover {
+  background-color: #2980b9;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+
+/*cart popup*/
+.cart-container {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.cart-popup img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.cart-popup.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+@media (max-width: 768px) {
+  .main-container {
+    width: 100%;
+    margin-left: 0;
+    padding: 15px;
+  }
+}

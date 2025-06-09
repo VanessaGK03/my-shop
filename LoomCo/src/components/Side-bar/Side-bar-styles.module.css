@@ -1,0 +1,52 @@
+.sidebar {
+  position: fixed;
+    top: 60px;
+    left: 0px;
+    background-color: whitesmoke;
+    width: 200px;
+    height: calc(100% - 60px);
+    transition: all 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar ul li a {
+  display: block;
+  padding: 20px;
+  color: black;
+  position: relative;
+  margin-bottom: 1px;
+  margin-right: 10px;
+  font-weight: 470;
+}
+
+.sidebar ul li a:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: #fff;
+  display: none;
+}
+
+.sidebar ul li a:hover {
+  color: rgb(68, 68, 68);
+}
+
+
+@media (max-width: 768px) {
+  .sidebar {
+    left: -100%;
+  }
+
+   .sidebar.active {
+    left: 0;
+  }
+
+  .sidebar {
+    z-index: 10;
+  }
+}
