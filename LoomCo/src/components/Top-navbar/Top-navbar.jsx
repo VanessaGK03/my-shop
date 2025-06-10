@@ -4,10 +4,14 @@ import logo from "../../assets/Site-logo.png";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function TopNavbar() {
+function TopNavbar({setShowSideBar}) {
   return (
     <div className={styles["top-navbar"]}>
-      <div className={styles["hamburger"]}>
+      <div onClick={() => {
+        setShowSideBar((value) => {
+            return !value;
+        })
+      }} className={styles["hamburger"]}>
         <div></div>
         <div></div>
         <div></div>
