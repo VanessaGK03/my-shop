@@ -1,0 +1,81 @@
+.main-container {
+    margin-left: 200px;
+    margin-top: 70px;
+    padding: 20px;
+}
+
+.profile-section,
+.orders-section {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section h2,
+.orders-section h2 {
+    margin-bottom: 15px;
+}
+
+.profile-info p {
+    margin: 5px 0;
+}
+
+.edit-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    color: red;
+    font-size: 13px;
+    margin-top: -8px;
+    margin-bottom: 10px;
+}
+
+.edit-form button,
+.profile-info button {
+    padding: 10px 18px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.edit-form button:hover,
+.profile-info button:hover {
+    background-color: #2980b9;
+}
+
+.profile-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.profile-actions button {
+    padding: 10px 18px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #444;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.profile-actions button:hover {
+    background-color: #222;
+}
+
+.profile-actions button:last-child {
+    background-color: crimson;
+}
+
+.profile-actions button:last-child:hover {
+    background-color: darkred;
+}

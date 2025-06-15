@@ -12,3 +12,57 @@
 .buy-button:hover {
   background-color: #333;
 }
+
+.login-button {
+  padding: 12px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background: #333;
+}
+
+.logout-button {
+  padding: 10px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #444;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #222;
+}
+
+.delete-button {
+  background-color: crimson;
+}
+
+.delete-button:hover {
+  background-color: darkred;
+}
+
+.edit-button,
+.save-button:hover {
+  padding: 10px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover,
+.save-button:hover:hover {
+  background-color: #2980b9;
+}

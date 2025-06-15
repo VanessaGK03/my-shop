@@ -12,6 +12,8 @@ const productService = {
     },
 
     async create(data) {
+        console.log(data);
+        
         if (data.discount === true && (data.discountValue === undefined || data.discountValue < 1 || data.discountValue > 99)) {
             throw new Error('Discount value must be between 1 and 99 if discount is true');
         }

@@ -6,10 +6,8 @@ const deliveryCompanyService = {
     },
 
     async createCompany(data) {
-        const existing = await DeliveryCompany.findOne({ name: data.name });
-        if (existing) throw new Error('Delivery company already exists');
-
         const company = new DeliveryCompany(data);
+
         return await company.save();
     },
 

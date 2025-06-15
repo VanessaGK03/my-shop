@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import userService from '../services/userService.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import { adminMiddleware } from '../middlewares/adminMiddleware.js';
 
 const userController = Router();
 
@@ -16,7 +15,7 @@ userController.get('/', async (req, res) => {
 });
 
 // GET /api/users/:id
-userController.get('/:id', async (req, res) => {
+userController.get('/:id', async (req, res) => {    
     try {
         const user = await userService.getUserById(req.params.id);
         res.json(user);
@@ -33,19 +32,19 @@ userController.post('/register', async (req, res) => {
         const user = await userService.register(username, email, password);
         res.status(201).json(user);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.json({ message: err.message });
     }
 });
 
 // POST /api/users/login
 userController.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-        const result = await userService.login(username, password);
+        const result = await userService.login(email, password);
         res.json(result);
     } catch (err) {
-        res.status(401).json({ message: err.message });
+        res.json({ message: err.message });
     }
 });
 
@@ -55,7 +54,16 @@ userController.put('/:id', authMiddleware, async (req, res) => {
         const updatedUser = await userService.updateUser(req.params.id, req.body);
         res.json(updatedUser);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.json({ message: err.message });
+    }
+});
+
+userController.put('/admin/:id', authMiddleware, async (req, res) => {
+    try {
+        const updatedUser = await userService.updateUserAdmin(req.params.id, req.body);
+        res.json(updatedUser);
+    } catch (err) {
+        res.json({ message: err.message });
     }
 });
 
@@ -107,7 +115,7 @@ userController.delete('/:id', authMiddleware, async (req, res) => {
     }
 });
 
-userController.put('/:id/promote', authMiddleware, adminMiddleware, async (req, res) => {
+userController.put('/:id/promote', authMiddleware, async (req, res) => {
     try {
         const updated = await userService.promoteToModerator(req.params.id);
         res.json(updated);
@@ -116,7 +124,7 @@ userController.put('/:id/promote', authMiddleware, adminMiddleware, async (req, 
     }
 });
 
-userController.put('/:id/demote', authMiddleware, adminMiddleware, async (req, res) => {
+userController.put('/:id/demote', authMiddleware, async (req, res) => {
     try {
         const updated = await userService.demoteFromModerator(req.params.id);
         res.json(updated);

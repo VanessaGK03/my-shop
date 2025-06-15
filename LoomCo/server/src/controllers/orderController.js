@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import { adminOrModeratorMiddleware } from '../middlewares/adminOrModeratorMiddleware.js';
 import orderService from '../services/orderService.js';
 
 const orderController = Router();
@@ -28,7 +27,7 @@ orderController.get('/my-orders', authMiddleware, async (req, res) => {
     }
 });
 
-orderController.get('/', authMiddleware, adminOrModeratorMiddleware, async (req, res) => {
+orderController.get('/', authMiddleware, async (req, res) => {
     try {
         const orders = await orderService.getAllOrders();
         res.json(orders);

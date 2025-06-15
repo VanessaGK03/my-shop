@@ -1,0 +1,158 @@
+.store-info-container {
+  max-width: 1000px;
+  margin: auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.main-container {
+  width: calc(100% - 200px);
+  margin-top: 70px;
+  margin-left: 200px;
+  padding: 15px;
+  transition: all 0.5s ease;
+}
+
+.store-info-container h2 {
+  margin-bottom: 15px;
+}
+
+.store-info-container input[type="text"],
+.product-admin-container input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/*end of store info container*/
+
+.admin-container,
+.product-admin-container,
+.delivery-container {
+  max-width: 1000px;
+  margin: auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+}
+
+.main-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.thead {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.th,
+.td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tr:hover {
+  background-color: #f1f1f1;
+}
+
+.button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.store-info-container .button,
+.blue-button {
+  background-color: #3498db;
+  color: white;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.button:nth-child(1):hover {
+  background-color: #2980b9;
+}
+
+.button:nth-child(2):hover,
+.delete-button {
+  background-color: #c0392b;
+}
+
+.input[type="text"],
+.input[type="email"] {
+  padding: 5px 10px;
+  width: 95%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.clothing-item {
+  margin-bottom: 20px;
+}
+
+.blue-button {
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .product-admin-container,
+  .admin-container,
+  .delivery-container {
+    padding: 15px;
+  }
+
+  .blue-button,
+  .delete-button {
+    padding: 5px;
+  }
+
+  .table {
+    font-size: 14px;
+  }
+
+  .th,
+  .td {
+    padding: 5px;
+    font-size: 10px;
+  }
+
+  .main-container {
+    width: 100%;
+    margin-left: 0;
+    padding: 15px;
+  }
+}

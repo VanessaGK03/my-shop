@@ -28,31 +28,37 @@ const userService = {
         const userWithoutPassword = savedUser.toObject();
         delete userWithoutPassword.password;
 
+        const token = jwt.sign(
+            { id: user._id, username: user.username },
+            process.env.JWT_SECRET,
+        );
+
+        userWithoutPassword.token = token;
+
         return userWithoutPassword;
     },
 
     // Метод за логване на потребител
-    async login(username, password) {
-        const user = await User.findOne({ username });
+    async login(email, password) {
+        const user = await User.findOne({ email });
         if (!user) {
-            throw new Error('Invalid username or password');
+            throw new Error('Invalid email or password');
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            throw new Error('Invalid username or password');
+            throw new Error('Invalid email or password');
         }
 
         const token = jwt.sign(
             { id: user._id, username: user.username },
             process.env.JWT_SECRET,
-            // { expiresIn: '1h' }
         );
 
         const userWithoutPassword = user.toObject();
         delete userWithoutPassword.password;
 
-        return { token, user: userWithoutPassword };
+        return { token, username: userWithoutPassword.username, id:userWithoutPassword._id, isAdmin:userWithoutPassword.isAdmin, isModerator:userWithoutPassword.isModerator  };
     },
 
     // Метод за извличане на един потребител посредсвтом неговото id
@@ -67,26 +73,26 @@ const userService = {
     // Метод за актуализиране на един потребител
     async updateUser(id, data) {
         const user = await User.findById(id);
-        if (!user) {
-            throw new Error('User not found');
+
+        const isMatch = await bcrypt.compare(data.password, user.password);
+
+        if (!isMatch) {
+            throw new Error("Wrong password")
         }
 
-        if (data.username && data.username !== user.username) {
-            const existingUsername = await User.findOne({ username: data.username });
-            if (existingUsername) {
-                throw new Error('Username already exists');
-            }
-            user.username = data.username;
-        }
+        user.username = data.username;
+        user.email = data.email;
 
-        if (data.email && data.email !== user.email) {
-            const existingEmail = await User.findOne({ email: data.email });
-            if (existingEmail) {
-                throw new Error('Email already exists');
-            }
-            user.email = data.email;
-        }
 
+        await user.save();
+        return { username: user.username, email: user.email };
+    },
+
+    async updateUserAdmin(id,data){
+        const user = await User.findById(id);
+
+        user.username = data.username;
+        user.email = data.email;
 
         await user.save();
         return { username: user.username, email: user.email };

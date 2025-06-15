@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import { adminOrModeratorMiddleware } from '../middlewares/adminOrModeratorMiddleware.js';
 import productService from '../services/productService.js';
 
 const productController = Router();
@@ -26,7 +25,7 @@ productController.get('/:id', async (req, res) => {
 });
 
 // POST /api/products
-productController.post('/', authMiddleware, adminOrModeratorMiddleware, async (req, res) => {
+productController.post('/', authMiddleware, async (req, res) => {
     try {
         const created = await productService.create(req.body);
         res.status(201).json(created);
@@ -36,7 +35,9 @@ productController.post('/', authMiddleware, adminOrModeratorMiddleware, async (r
 });
 
 // PUT /api/products/:id
-productController.put('/:id', authMiddleware, adminOrModeratorMiddleware, async (req, res) => {
+productController.put('/:id', authMiddleware, async (req, res) => {
+    console.log(req.body);
+    
     try {
         const updated = await productService.update(req.params.id, req.body);
         res.json(updated);
@@ -46,7 +47,7 @@ productController.put('/:id', authMiddleware, adminOrModeratorMiddleware, async 
 });
 
 // DELETE /api/products/:id
-productController.delete('/:id', authMiddleware, adminOrModeratorMiddleware, async (req, res) => {
+productController.delete('/:id', authMiddleware, async (req, res) => {
     try {
         const result = await productService.delete(req.params.id);
         res.json(result);

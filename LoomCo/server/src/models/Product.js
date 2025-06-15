@@ -10,12 +10,13 @@ const reviewSchema = new mongoose.Schema({
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
   price: Number,
-  size: { type: String, enum: ['S', 'M', 'L', 'XL'] },
-  color: { type: String, enum: ['White', 'Black', 'Red', 'Blue', 'Green', 'Yellow', 'Gray'] },
+  size: [{ type: String, enum: ['S', 'M', 'L', 'XL'] }],
+  color: [{ type: String, enum: ['White', 'Black', 'Red', 'Blue', 'Green', 'Yellow', 'Gray'] }],
   image: String,
   discount: Boolean,
   discountValue: Number,
   type: { type: String, enum: ['Dress', 'T-shirt', 'Trousers', 'Polo'] },
+  category:String,
   reviews: [reviewSchema]
 });
 

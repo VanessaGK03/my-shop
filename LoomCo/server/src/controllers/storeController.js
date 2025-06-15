@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import adminOrModeratorMiddleware from '../middlewares/adminOrModeratorMiddleware.js';
 import storeService from '../services/storeService.js';
 
 const router = Router();
 
 router.get('/', async (req, res) => {
+    console.log("dadadad");
+    
     try {
         const info = await storeService.getStoreInfo();
         res.json(info);
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.put('/', authMiddleware, adminOrModeratorMiddleware, async (req, res) => {
+router.put('/', authMiddleware, async (req, res) => {
     try {
         const updated = await storeService.updateStoreInfo(req.body);
         res.json(updated);

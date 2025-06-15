@@ -6,6 +6,11 @@ import AuthProvider from "./context/Auth-context";
 import HomePage from "./pages/Home/Home-page";
 import { useState } from "react";
 import CatalogPage from "./pages/Catalog/Catalog-page";
+import ProductPage from "./pages/Product/Product";
+import RegisterPage from "./pages/Register/Register";
+import LoginPage from "./pages/Login/Login";
+import ProfilePage from "./pages/Profile/Profile";
+import PanelPage from "./pages/Panel/Panel";
 
 function App() {
   const [showSideBar, setSideBar] = useState(true)
@@ -17,6 +22,11 @@ function App() {
           <Route path="home" element={<HomePage />} />
           <Route path="man" element={<CatalogPage category="man" showSideBar={showSideBar} />} />
           <Route path="woman" element={<CatalogPage category="woman" showSideBar={showSideBar} />} />
+          <Route path="register" element={<RegisterPage showSideBar={showSideBar}/>} />
+          <Route path="login" element={<LoginPage showSideBar={showSideBar}/>} />
+          <Route path="profile" element={<ProfilePage showSideBar={showSideBar}/>} />
+          <Route path="product/:id" element={ <ProductPage showSideBar={showSideBar}/> } />
+          <Route path="panel" element={<PanelPage showSideBar={showSideBar} />} />
         </Routes>
         <SideBar showSideBar={showSideBar} />
       </AuthProvider>
