@@ -11,13 +11,15 @@ import RegisterPage from "./pages/Register/Register";
 import LoginPage from "./pages/Login/Login";
 import ProfilePage from "./pages/Profile/Profile";
 import PanelPage from "./pages/Panel/Panel";
+import CartPage from "./pages/Cart/Cart";
 
 function App() {
   const [showSideBar, setSideBar] = useState(true)
+  const [showPop, setShowPop] = useState(false);
   return (
     <>
       <AuthProvider>
-        <TopNavbar setShowSideBar={setSideBar} />
+        <TopNavbar setShowSideBar={setSideBar} setShowPop={setShowPop} showPop={showPop} />
         <Routes>
           <Route path="home" element={<HomePage />} />
           <Route path="man" element={<CatalogPage category="man" showSideBar={showSideBar} />} />
@@ -25,8 +27,9 @@ function App() {
           <Route path="register" element={<RegisterPage showSideBar={showSideBar}/>} />
           <Route path="login" element={<LoginPage showSideBar={showSideBar}/>} />
           <Route path="profile" element={<ProfilePage showSideBar={showSideBar}/>} />
-          <Route path="product/:id" element={ <ProductPage showSideBar={showSideBar}/> } />
+          <Route path="product/:id" element={ <ProductPage setShowPop={setShowPop} showSideBar={showSideBar}/> } />
           <Route path="panel" element={<PanelPage showSideBar={showSideBar} />} />
+          <Route path="cart" element={<CartPage />}/>
         </Routes>
         <SideBar showSideBar={showSideBar} />
       </AuthProvider>

@@ -12,7 +12,7 @@ import { authContext } from "../../context/Auth-context";
 function ProfilePage({ showSideBar }) {
   const editFormRef = useRef(null);
   const profileInfoRef = useRef(null);
-  const userId = getUserId();
+  const userId = getUserId() || undefined;
   const auth = useContext(authContext);
   const navigate = useNavigate();
 
@@ -23,12 +23,21 @@ function ProfilePage({ showSideBar }) {
     false
   );
 
+  let [profileOrders] = useFetch(
+    "GET",
+    import.meta.env.VITE_API_ADRESS + "/orders/my-orders",
+    null,
+    false
+  ) 
+
   useEffect(() => {
     if (profileData.username) {
       setForm(profileData.username, "username");
       setForm(profileData.email, "email");
     }
-  }, [profileData]);
+    console.log(profileOrders);
+    
+  }, [profileData, profileOrders]);
 
   const [form, setForm, formSubmitFunction] = useForm(
     {
@@ -69,6 +78,8 @@ function ProfilePage({ showSideBar }) {
     expandMainClass.marginLeft = "200px";
     expandMainClass.width = "calc(100% - 200px)";
   }
+
+  console.log(profileData);
 
   const showEditForm = () => {
     const editForm = editFormRef.current;
@@ -187,7 +198,12 @@ function ProfilePage({ showSideBar }) {
           />
           <Button
             page={"delete"}
-            handleOnClick={() => console.log("Deleting profile...")}
+            handleOnClick={async () => {
+              await requester("DELETE", import.meta.env.VITE_API_ADRESS + "/users/" + userId)
+              logOutUser();
+              auth.setUser({ isLogged: false });
+              navigate("/login");
+            }}
           />
         </div>
       </div>
@@ -195,9 +211,9 @@ function ProfilePage({ showSideBar }) {
       <div className={styles["orders-section"]}>
         <h2>My Orders</h2>
         <ul id="orderList">
-          <li>Order #12345 - $150 - 03.05.2025</li>
-          <li>Order #12346 - $80 - 28.04.2025</li>
-          {/* <!-- Други поръчки тук --> */}
+          {Array.isArray(profileOrders) && profileOrders.map((order) => {
+            return <li key={order._id}>Order #{order.number} - ${order.totalPrice} - {new Date(order.date).toLocaleDateString("bg-BG")}</li> 
+          })}
         </ul>
       </div>
     </div>

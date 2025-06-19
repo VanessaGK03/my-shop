@@ -105,10 +105,8 @@ userController.put('/:id/username', authMiddleware, async (req, res) => {
 
 // DELETE /api/users/:id
 userController.delete('/:id', authMiddleware, async (req, res) => {
-    const { password } = req.body;
-
     try {
-        const result = await userService.deleteProfile(req.params.id, password);
+        const result = await userService.deleteProfile(req.params.id);
         res.json(result);
     } catch (err) {
         res.status(400).json({ message: err.message });

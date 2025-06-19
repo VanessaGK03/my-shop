@@ -8,8 +8,6 @@ const orderService = {
 
     async getUserOrders(userId) {
         return await Order.find({ user: userId })
-            .populate('products.productId', 'name image')
-            .populate('courier', 'name deliveryPriceToOffice deliveryPriceToAddress')
             .sort({ date: -1 });
     },
 

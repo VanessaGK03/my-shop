@@ -58,8 +58,11 @@ productController.delete('/:id', authMiddleware, async (req, res) => {
 
 // POST /api/products/:id/reviews
 productController.post('/:id/reviews', authMiddleware, async (req, res) => {
+    console.log(req.params.id);
+    console.log(req.user._id);
+    console.log(req.body);
     try {
-        const product = await productService.addReview(req.params.id, req.user, req.body);
+        const product = await productService.addReview(req.params.id, req.user, req.body.productComment);
         res.json(product);
     } catch (err) {
         res.status(400).json({ message: err.message });

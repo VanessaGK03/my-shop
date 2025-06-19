@@ -63,7 +63,7 @@ const userService = {
 
     // Метод за извличане на един потребител посредсвтом неговото id
     async getUserById(id) {
-        const user = await User.findById(id).select('-password');
+        const user = await User.findById(id).select('-password').populate("orders");
         if (!user) {
             throw new Error('User not found');
         }
@@ -147,15 +147,9 @@ const userService = {
 
     // Метод за изтриване на един потребител
 
-    async deleteProfile(userId, password) {
+    async deleteProfile(userId) {
         try {
             const user = await User.findById(userId);
-
-            const isMatch = await bcrypt.compare(password, user.password);
-
-            if (!isMatch) {
-                return { message: "Wrong password" }
-            }
 
             await User.findByIdAndDelete(userId);
 

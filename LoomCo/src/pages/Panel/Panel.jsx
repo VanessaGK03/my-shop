@@ -19,7 +19,6 @@ function PanelPage() {
   const [editUsersData, setEditUsersData] = useState([]);
 
   console.log(isModerator());
-  
 
   const [storeFetchData] = useFetch(
     "GET",
@@ -73,9 +72,12 @@ function PanelPage() {
       let formData = new FormData(e.currentTarget);
       let isDiscount = false;
 
-      if (++form.discount.value) {
+      if (+form.discount.value) {
         isDiscount = true;
       }
+
+      console.log(form);
+      
 
       let data = await requester(
         "POST",
@@ -119,7 +121,7 @@ function PanelPage() {
 
       if (+editForm.discount.value) {
         isDiscount = true;
-      }
+      }      
 
       let data = await requester(
         "PUT",
@@ -174,7 +176,11 @@ function PanelPage() {
     }
   );
 
-  const [editDeliveryForm, setEditDileveryForm, editDileveryFormSubmitFunction] = useForm(
+  const [
+    editDeliveryForm,
+    setEditDileveryForm,
+    editDileveryFormSubmitFunction,
+  ] = useForm(
     {
       name: { value: "" },
       deliveryPriceToOffice: { value: "" },
@@ -183,115 +189,123 @@ function PanelPage() {
     async (e) => {
       e.preventDefault();
 
-      let data = await requester("PUT", import.meta.env.VITE_API_ADRESS + "/delivery/" + String(currentDeliveryEdit._id), {
-        name: editDeliveryForm.name.value,
-        deliveryPriceToOffice: +editDeliveryForm.deliveryPriceToOffice.value,
-        deliveryPriceToAddress: +editDeliveryForm.deliveryPriceToAddress.value,
-      });
+      let data = await requester(
+        "PUT",
+        import.meta.env.VITE_API_ADRESS +
+          "/delivery/" +
+          String(currentDeliveryEdit._id),
+        {
+          name: editDeliveryForm.name.value,
+          deliveryPriceToOffice: +editDeliveryForm.deliveryPriceToOffice.value,
+          deliveryPriceToAddress:
+            +editDeliveryForm.deliveryPriceToAddress.value,
+        }
+      );
       let newDeliveryData = JSON.parse(JSON.stringify(deliveryData));
 
       let index = 0;
 
       for (let i = 0; i < deliveryData.length; i++) {
-        if(currentDeliveryEdit._id === data._id){
-            index = i;
+        if (currentDeliveryEdit._id === data._id) {
+          index = i;
         }
       }
       newDeliveryData.splice(index, 1, data);
 
-      setDeliveryData([...newDeliveryData])
-      setShowDeliveryEdit(false)
+      setDeliveryData([...newDeliveryData]);
+      setShowDeliveryEdit(false);
     }
   );
 
   return (
     <div className={styles["main-container"]}>
       <h2>Admin panel</h2>
-      {isModerator() === false && (<div className={styles["store-info-container"]}>
-        <h2>Store Info</h2>
-        {!showEditStore && (
-          <div id="storeDisplay">
-            <p>
-              <strong>Name:</strong>{" "}
-              <span id="storeName">{storeData.name}</span>
-            </p>
-            <p>
-              <strong>Address:</strong>{" "}
-              <span id="storeAddress">{storeData.address}</span>
-            </p>
-            <button
-              className={styles["blue-button"]}
-              onClick={() => {
-                setEditStore((prev) => {
-                  return !prev;
-                });
-              }}
-            >
-              Edit
-            </button>
-          </div>
-        )}
-        {showEditStore && (
-          <div id="storeEditForm">
-            <label>Store name:</label>
-            <input
-              type="text"
-              id="editStoreName"
-              value={storeData.name}
-              onChange={(e) => {
-                setStoreData({
-                  address: storeData.address,
-                  name: e.currentTarget.value,
-                });
-              }}
-            />
-            <label>Address:</label>
-            <input
-              type="text"
-              id="editStoreAddress"
-              value={storeData.address}
-              onChange={(e) => {
-                setStoreData({
-                  address: e.currentTarget.value,
-                  name: storeData.name,
-                });
-              }}
-            />
-            <button
-              className={styles["blue-button"]}
-              onClick={async () => {
-                const data = await requester(
-                  "PUT",
-                  import.meta.env.VITE_API_ADRESS + "/store",
-                  {
-                    name: storeData.name,
+      {isModerator() === false && (
+        <div className={styles["store-info-container"]}>
+          <h2>Store Info</h2>
+          {!showEditStore && (
+            <div id="storeDisplay">
+              <p>
+                <strong>Name:</strong>{" "}
+                <span id="storeName">{storeData.name}</span>
+              </p>
+              <p>
+                <strong>Address:</strong>{" "}
+                <span id="storeAddress">{storeData.address}</span>
+              </p>
+              <button
+                className={styles["blue-button"]}
+                onClick={() => {
+                  setEditStore((prev) => {
+                    return !prev;
+                  });
+                }}
+              >
+                Edit
+              </button>
+            </div>
+          )}
+          {showEditStore && (
+            <div id="storeEditForm">
+              <label>Store name:</label>
+              <input
+                type="text"
+                id="editStoreName"
+                value={storeData.name}
+                onChange={(e) => {
+                  setStoreData({
                     address: storeData.address,
-                  }
-                );
-                console.log(data);
+                    name: e.currentTarget.value,
+                  });
+                }}
+              />
+              <label>Address:</label>
+              <input
+                type="text"
+                id="editStoreAddress"
+                value={storeData.address}
+                onChange={(e) => {
+                  setStoreData({
+                    address: e.currentTarget.value,
+                    name: storeData.name,
+                  });
+                }}
+              />
+              <button
+                className={styles["blue-button"]}
+                onClick={async () => {
+                  const data = await requester(
+                    "PUT",
+                    import.meta.env.VITE_API_ADRESS + "/store",
+                    {
+                      name: storeData.name,
+                      address: storeData.address,
+                    }
+                  );
+                  console.log(data);
 
-                setStoreData(data);
-                setEditStore((prev) => {
-                  return !prev;
-                });
-              }}
-            >
-              Save
-            </button>
-            <button
-              className={styles["blue-button"]}
-              onClick={() => {
-                setEditStore((prev) => {
-                  return !prev;
-                });
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-      </div>)}
-      
+                  setStoreData(data);
+                  setEditStore((prev) => {
+                    return !prev;
+                  });
+                }}
+              >
+                Save
+              </button>
+              <button
+                className={styles["blue-button"]}
+                onClick={() => {
+                  setEditStore((prev) => {
+                    return !prev;
+                  });
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className={styles["admin-container"]}>
         <div id="userlist" className={styles["user-list"]}>
@@ -398,7 +412,25 @@ function PanelPage() {
                             >
                               Edit
                             </button>
-                            <button>Delete</button>
+                            <button
+                              onClick={async () => {
+                                await requester(
+                                  "DELETE",
+                                  import.meta.env.VITE_API_ADRESS +
+                                    "/users/" +
+                                    user._id
+                                );
+
+                                setUsersData((prev) =>
+                                  prev.filter((u) => u._id !== user._id)
+                                );
+                                setEditUsersData((prev) =>
+                                  prev.filter((_, idx) => idx !== i)
+                                );
+                              }}
+                            >
+                              Delete
+                            </button>
                             <button
                               onClick={async () => {
                                 await requester(
@@ -540,8 +572,7 @@ function PanelPage() {
           <select
             name="category"
             id="productCategory"
-            value={form.name.category}
-            onChange={(e) => {
+            onChange={(e) => {              
               setForm(e.currentTarget.value, e.target.name);
             }}
           >
@@ -594,7 +625,6 @@ function PanelPage() {
           <select
             name="type"
             id="productType"
-            value={form.name.type}
             onChange={(e) => {
               setForm(e.currentTarget.value, e.target.name);
             }}
@@ -615,22 +645,22 @@ function PanelPage() {
               console.log(product);
 
               return (
-                <div key={product._id} className={styles["clothing-item"]}>
+                <div key={product?._id} className={styles["clothing-item"]}>
                   <img
-                    src={product.image}
+                    src={product?.image}
                     alt="Product image"
                     style={{ width: "150px" }}
                   />
                   <p className={styles["clothes-name"]}>
-                    Title: {product.name}
+                    Title: {product?.name}
                   </p>
                   <p className={styles["clothes-price"]}>
-                    Price: ${product.price}
+                    Price: ${product?.price}
                   </p>
-                  <p>Category: {product.category}</p>
-                  <p>Sizes: {product.size.join(" ")}</p>
-                  <p>Colors: {product.color.join(" ")}</p>
-                  <p>Type: {product.type}</p>
+                  <p>Category: {product?.category}</p>
+                  <p>Sizes: {product?.size?.join(" ")}</p>
+                  <p>Colors: {product?.color?.join(" ")}</p>
+                  <p>Type: {product?.type}</p>
 
                   <button
                     className={styles["blue-button"]}
@@ -650,7 +680,21 @@ function PanelPage() {
                   >
                     Edit
                   </button>
-                  <button className={styles["delete-button"]}>Delete</button>
+                  <button
+                    className={styles["delete-button"]}
+                    onClick={async () => {
+                      await requester(
+                        "DELETE",
+                        import.meta.env.VITE_API_ADRESS + "/products/" + product._id
+                      );
+                      setCatalogData((prev) =>
+                        prev.filter((p) => p._id !== product._id)
+                      );
+                      setShowCatalogEdit(false);
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
               );
             })}
@@ -976,54 +1020,75 @@ function PanelPage() {
           {Array.isArray(deliveryData) &&
             deliveryData.map((delivery, i) => {
               return (
-                <div style={{ border: '1px solid rgb(204, 204, 204)', padding: '10px', margin: '10px 0px' }}>
+                <div
+                  style={{
+                    border: "1px solid rgb(204, 204, 204)",
+                    padding: "10px",
+                    margin: "10px 0px",
+                  }}
+                >
                   <strong>{delivery.name}</strong>
                   <br />
-                  <span id="officeDisplay-0">До офис: ${delivery.deliveryPriceToOffice}</span>
+                  <span id="officeDisplay-0">
+                    До офис: ${delivery.deliveryPriceToOffice}
+                  </span>
                   <br />
-                  <span id="addressDisplay-0">До адрес: ${delivery.deliveryPriceToAddress}</span>
+                  <span id="addressDisplay-0">
+                    До адрес: ${delivery.deliveryPriceToAddress}
+                  </span>
                   <br />
-                  <div id="buttons-0">
-                    <button class="blue-button" onClick={() => {
-                        setShowDeliveryEdit(true);                        
-                        setCurrentDeliveryEdit(delivery);
-                        setEditDileveryForm(delivery.name,"name")
-                        setEditDileveryForm(delivery.deliveryPriceToOffice,"deliveryPriceToOffice")
-                        setEditDileveryForm(delivery.deliveryPriceToAddress,"deliveryPriceToAddress")
-
-                    }}>
-                      Edit
-                    </button>
-                    <button class="delete-button" onclick="deleteDelivery(0)">
-                      Delete
-                    </button>
-                  </div>
                 </div>
               );
             })}
         </div>
-        {showDeliveryEdit && (<form id="editFields-0" style={{display:"flex", flexDirectio:"collumn" }} onSubmit={editDileveryFormSubmitFunction}>
-            <label >Име:{" "}</label>
-            <input type="text" name="name" value={editDeliveryForm.name.value} onChange={(e) => {
-                setEditDileveryForm(e.currentTarget.value, e.target.name)
-            }}/>
-            <label >До офис:{" "}</label>
-            <input type="number" id="editOffice-0" name="deliveryPriceToOffice" value={editDeliveryForm.deliveryPriceToOffice.value} onChange={(e) => {
-                setEditDileveryForm(e.currentTarget.value, e.target.name)
-            }}/>
+        {showDeliveryEdit && (
+          <form
+            id="editFields-0"
+            style={{ display: "flex", flexDirectio: "collumn" }}
+            onSubmit={editDileveryFormSubmitFunction}
+          >
+            <label>Име: </label>
+            <input
+              type="text"
+              name="name"
+              value={editDeliveryForm.name.value}
+              onChange={(e) => {
+                setEditDileveryForm(e.currentTarget.value, e.target.name);
+              }}
+            />
+            <label>До офис: </label>
+            <input
+              type="number"
+              id="editOffice-0"
+              name="deliveryPriceToOffice"
+              value={editDeliveryForm.deliveryPriceToOffice.value}
+              onChange={(e) => {
+                setEditDileveryForm(e.currentTarget.value, e.target.name);
+              }}
+            />
             <br />
-            <label >До адрес:{" "}</label>
-            <input type="number" id="editAddress-0" name="deliveryPriceToAddress" value={editDeliveryForm.deliveryPriceToAddress.value} onChange={(e) => {
-                setEditDileveryForm(e.currentTarget.value, e.target.name)
-            }}/>
+            <label>До адрес: </label>
+            <input
+              type="number"
+              id="editAddress-0"
+              name="deliveryPriceToAddress"
+              value={editDeliveryForm.deliveryPriceToAddress.value}
+              onChange={(e) => {
+                setEditDileveryForm(e.currentTarget.value, e.target.name);
+              }}
+            />
             <br />
             <button>Edit</button>
-            <button onClick={() => {
-                setShowDeliveryEdit(false)
-            }}>Cancel</button>
-        </form>)}
-
-    </div>
+            <button
+              onClick={() => {
+                setShowDeliveryEdit(false);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        )}
+      </div>
 
       <div className={styles["admin-container"]} style={{ overflowX: "auto" }}>
         <h3>Statistic about sales</h3>

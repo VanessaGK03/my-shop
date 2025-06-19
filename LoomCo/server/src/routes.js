@@ -12,6 +12,7 @@ routes.use('/products', productController);
 routes.use('/delivery', deliveryCompanyController);
 routes.use('/store', storeController);
 routes.use('/orders', orderController);
+routes.use('/stats', statsController);
 
 
 export default routes;

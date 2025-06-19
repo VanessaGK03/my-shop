@@ -1,6 +1,6 @@
 import styles from "./Button-styles.module.css";
 
-function Button({ page, handleOnClick, disabled }) {
+function Button({ page, handleOnClick, disabled, isProductFound }) {
   let buttonClass;
   let buttonText;
 
@@ -45,6 +45,11 @@ function Button({ page, handleOnClick, disabled }) {
     buttonText = "Back";
     buttonClass = styles["save-button"];
     break;
+  }
+
+  if(isProductFound){
+    buttonText = "Item is already in the basket";
+    disabled = true;
   }
 
   return (

@@ -13,14 +13,6 @@ const productService = {
 
     async create(data) {
         console.log(data);
-        
-        if (data.discount === true && (data.discountValue === undefined || data.discountValue < 1 || data.discountValue > 99)) {
-            throw new Error('Discount value must be between 1 and 99 if discount is true');
-        }
-
-        if (data.discount === false && data.discountValue !== undefined) {
-            throw new Error('Discount value must not be set if discount is false');
-        }
 
         const product = new Product(data);
         return await product.save();
@@ -38,19 +30,16 @@ const productService = {
         return { message: 'Product deleted successfully' };
     },
 
-    async addReview(productId, user, { rating, comment }) {
+    async addReview(productId, user, comment) {
         const product = await Product.findById(productId);
         if (!product) throw new Error('Product not found');
 
-        const existingReview = product.reviews.find(r => r.userId.toString() === user._id.toString());
-        if (existingReview) {
-            throw new Error('You have already reviewed this product');
-        }
+        console.log(user);
+        console.log(product);
 
         product.reviews.push({
             userId: user._id,
             username: user.username,
-            rating,
             comment,
         });
 

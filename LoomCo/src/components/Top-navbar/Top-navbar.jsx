@@ -3,8 +3,24 @@ import styles from "./Top-navbar-styles.module.css";
 import logo from "../../assets/Site-logo.png";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router";
+import { getItemsFromBasket, isBasketEmpty } from "../../utils/userUtils";
 
-function TopNavbar({setShowSideBar}) {
+function TopNavbar({setShowSideBar, showPop, setShowPop}) {
+  let navigate = useNavigate();
+  
+  let makeBlock = "none"
+
+  if(showPop === true){
+     makeBlock = "block"
+     setTimeout(() => {
+        setShowPop(false);
+     },3000)
+  }
+
+  console.log(showPop);
+  
+
   return (
     <div className={styles["top-navbar"]}>
       <div onClick={() => {
@@ -30,7 +46,15 @@ function TopNavbar({setShowSideBar}) {
             <span>New exclusive arrivals — luxury you can feel</span>
           </div>
         </div>
-        <FontAwesomeIcon style={{fontSize:30}} icon={faCartShopping} />
+        <FontAwesomeIcon style={{fontSize:30}} className={styles.hover} icon={faCartShopping} onClick={() => {
+          if(isBasketEmpty() === false){
+              return;
+          }
+          navigate("/cart")
+        }} />
+        <div style={{display: makeBlock}} className={styles["cart-popup"]} id="cartPopup">
+        <span>Added to cart</span>
+        </div>
       </div>
     </div>
   );
